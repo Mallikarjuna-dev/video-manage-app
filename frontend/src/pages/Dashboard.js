@@ -10,7 +10,7 @@ const Dashboard = () => {
     const fetchVideos = async () => {
         setIsLoading(true);
         try {
-            const { data } = await API.get("/videos");
+            const { data } = await API.get("/api/videos");
             setVideos(data);
         } catch (err) {
             console.error(err);

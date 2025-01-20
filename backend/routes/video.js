@@ -5,9 +5,9 @@ const { Upload, getVideos } = require("../controllers/videoController");
 const router = express.Router();
 
 // Upload video
-router.post("/", auth, Upload);
+router.post("/videos", auth, Upload);
 
 // Get videos with pagination
-router.get("/", auth, getVideos);
+router.get("/videos", auth, getVideos);
 
 module.exports = router;

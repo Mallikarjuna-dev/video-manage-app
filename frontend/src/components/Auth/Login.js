@@ -21,13 +21,16 @@ const Login = () => {
 
         try {
             // Send a POST request to the backend for login
-            const response = await API.post("/auth/login", formData);
+            const response = await API.post("/api/login", formData);
+            console.log(response.data)
 
             // Save the token in localStorage
             localStorage.setItem("token", response.data.token);
+            console.log("Redirecting to dashboard...");
 
             // Navigate to the dashboard or home page
             navigate("/dashboard");
+            // setTimeout(() => navigate("/dashboard"), 2000);
         } catch (err) {
             const message =
                 err.response?.data?.message || "Login failed. Please try again.";

@@ -2,7 +2,7 @@ const Video = require("../models/Video");
 
 // Upload video
 const Upload = async (req, res) => {
-    const { title, description, tags, videoUrl } = req.body;
+    const { title, description, tags } = req.body;
 
     try {
         const video = new Video({
@@ -10,7 +10,6 @@ const Upload = async (req, res) => {
             title,
             description,
             tags,
-            videoUrl,
         });
         await video.save();
         res.status(201).json({ message: "Video uploaded successfully", video });

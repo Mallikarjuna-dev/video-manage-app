@@ -24,7 +24,7 @@ const Register = () => {
 
         try {
             // Send a POST request to the /auth/register endpoint
-            await API.post("/auth/register", formData);
+            await API.post("/api/register", formData);
             setSuccess(true);
             // Redirect the user to the login page after successful registration
             setTimeout(() => navigate("/"), 2000);

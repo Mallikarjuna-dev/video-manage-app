@@ -5,7 +5,7 @@ const videoSchema = new mongoose.Schema({
     title: { type: String, required: true },
     description: String,
     tags: [String],
-    videoUrl: { type: String, required: true },
+    videoUrl: { type: String },
     createdAt: { type: Date, default: Date.now },
 });
 
