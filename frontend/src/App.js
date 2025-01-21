@@ -4,6 +4,7 @@ import Login from "./components/Auth/Login";
 import Register from "./components/Auth/Register";
 import Dashboard from "./pages/Dashboard";
 import { isAuthenticated } from "./utils/auth";
+import Home from "./pages/Home";
 
 const App = () => {
   return (
@@ -11,9 +12,10 @@ const App = () => {
       <Routes>
         <Route
           path="/"
-          element={isAuthenticated() ? <Navigate to="/dashboard" /> : <Login />}
+          element={isAuthenticated() ? <Home /> : <Navigate to="/login" />}
         />
         <Route path="/register" element={<Register />} />
+        <Route path="/login" element={<Login />} />
         <Route
           path="/dashboard"
           element={isAuthenticated() ? <Dashboard /> : <Navigate to="/" />}

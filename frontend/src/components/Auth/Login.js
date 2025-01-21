@@ -8,6 +8,7 @@ const Login = () => {
         password: "",
     });
     const [error, setError] = useState("");
+    const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
 
     const handleChange = (e) => {
@@ -18,7 +19,7 @@ const Login = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setError("");
-
+        setLoading(true)
         try {
             // Send a POST request to the backend for login
             const response = await API.post("/api/login", formData);
@@ -29,7 +30,9 @@ const Login = () => {
             console.log("Redirecting to dashboard...");
 
             // Navigate to the dashboard or home page
-            navigate("/dashboard");
+            navigate("/")
+
+            setLoading(false);
             // setTimeout(() => navigate("/dashboard"), 2000);
         } catch (err) {
             const message =
@@ -91,7 +94,7 @@ const Login = () => {
                         type="submit"
                         className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
                     >
-                        Login
+                        {loading ? "Loading..." : "Login"}
                     </button>
                 </div>
 

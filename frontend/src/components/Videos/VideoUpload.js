@@ -6,13 +6,15 @@ const VideoUpload = ({ onUpload }) => {
     const [description, setDescription] = useState("");
     const [tags, setTags] = useState("");
     const [videoFile, setVideoFile] = useState(null);
-    const [previewUrl, setPreviewUrl] = useState("");
+    const [localPreviewUrl, setLocalPreviewUrl] = useState("");
+    const [uploadedVideoUrl, setUploadedVideoUrl] = useState("");
 
     const handleFileChange = (e) => {
         const file = e.target.files[0];
         if (file) {
             setVideoFile(file);
-            setPreviewUrl(URL.createObjectURL(file)); // Generate a preview URL for the video
+            setLocalPreviewUrl(URL.createObjectURL(file)); // Generate a preview URL for the video
+            setUploadedVideoUrl("");
         }
     };
 
@@ -29,14 +31,21 @@ const VideoUpload = ({ onUpload }) => {
         formData.append("video", videoFile);
 
         try {
-            await API.post("/api/videos", formData, {
+            const token = localStorage.getItem("token"); // Retrieve token from localStorage
+
+            const response = await API.post("/api/videos", formData, {
                 headers: {
                     "Content-Type": "multipart/form-data",
+                    Authorization: `Bearer ${token}`, // Add the token to the headers
                 },
             });
+            console.log(response.data.video)
+            const uploadedUrl = response.data.video.videoUrl;
+            setUploadedVideoUrl(uploadedUrl);
+
             onUpload(); // Notify the parent component to refresh the video list
         } catch (err) {
-            console.error(err);
+            console.error("Error uploading video:", err);
         }
     };
 
@@ -100,16 +109,31 @@ const VideoUpload = ({ onUpload }) => {
             </button>
 
             {/* Video Preview */}
-            {previewUrl && (
-                <div className="mb-4">
-                    <h3 className="text-lg font-bold mb-2">Preview</h3>
-                    <video
-                        src={previewUrl}
-                        controls
-                        className="w-full rounded shadow-md"
-                    ></video>
-                </div>
-            )}
+            <div className="mt-4">
+                <h3 className="text-lg font-bold mb-2">Video Preview</h3>
+
+                {localPreviewUrl && !uploadedVideoUrl && (
+                    <div>
+                        <p className="text-gray-600 mb-2">Previewing local video:</p>
+                        <video
+                            src={localPreviewUrl}
+                            controls
+                            className="w-full rounded shadow-md"
+                        ></video>
+                    </div>
+                )}
+
+                {uploadedVideoUrl && (
+                    <div>
+                        <p className="text-gray-600 mb-2">Previewing uploaded video:</p>
+                        <video
+                            src={uploadedVideoUrl}
+                            controls
+                            className="w-full rounded shadow-md"
+                        ></video>
+                    </div>
+                )}
+            </div>
         </div>
     );
 };

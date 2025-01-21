@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import API from "../utils/api";
 import VideoUpload from "../components/Videos/VideoUpload";
 import VideoList from "../components/Videos/VideoList";
+import Navbar from "../components/Navbar";
 
 const Dashboard = () => {
     const [videos, setVideos] = useState([]);
@@ -24,8 +25,11 @@ const Dashboard = () => {
     }, []);
 
     return (
-        <div className="p-4">
-            <h1 className="text-3xl font-bold mb-4">Your Videos</h1>
+        <div className="pb-4">
+            <Navbar />
+            <div className="p-6">
+                <h1 className="text-2xl font-semibold">Manage your videos efficiently and easily!</h1>
+            </div>
             <VideoUpload onUpload={fetchVideos} />
             {isLoading ? (
                 <p>Loading...</p>
