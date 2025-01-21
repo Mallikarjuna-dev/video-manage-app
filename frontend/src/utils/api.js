@@ -1,6 +1,7 @@
 import axios from "axios";
 
-const API = axios.create({ baseURL: "http://localhost:5000" });
+// http://localhost:5000
+const API = axios.create({ baseURL: "https://video-manage-app.onrender.com" });
 
 API.interceptors.request.use((req) => {
     const token = localStorage.getItem("token");
